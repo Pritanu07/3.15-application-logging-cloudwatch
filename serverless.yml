@@ -1,0 +1,23 @@
+service: application-logging-cloudwatch
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-southeast-1  
+  deploymentBucket:
+    name: cohort2.serverless.deploys
+
+functions:
+  api:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+    environment:
+      #ACCESS_INFORMATION: '34234'
+      ACCESS_KEY: ${ssm:priya-ps}
+
+plugins:
+  - serverless-offline
