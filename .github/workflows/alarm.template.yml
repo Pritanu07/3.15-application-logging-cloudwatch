@@ -1,0 +1,28 @@
+Description: 'application-logging-cloudwatch'
+
+Resources:
+  OpsGenieSNS:
+    Type: AWS::SNS::Topic
+    Properties: 
+      DisplayName: 'Opsgenie'
+      Subscription:
+        - Endpoint: 'https://api.opsgenie.com/v1/json/cloudwatch?apiKey=a4449509-6998-4d55-841d-2e6b363520c7'
+          Protocol: 'HTTPS'
+      TopicName: 'Opsgenie'
+
+  SubmitImageLambdaAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties: 
+      AlarmActions:
+        - !Ref 'OpsGenieSNS'
+      AlarmDescription: 'SubmitImage Too Many Invocations'
+      ComparisonOperator: 'GreaterThanThreshold'
+      Dimensions:
+        - Name: FunctionName
+          Value: !ImportValue 'SubmitImageFunctionName'
+      EvaluationPeriods: 1
+      MetricName: 'Invocations'
+      Namespace: 'AWS/Lambda'
+      Period: 60
+      Statistic: 'Sum'
+      Threshold: 10
