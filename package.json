@@ -1,5 +1,5 @@
 {
-  "name": "package-vulnerability-scan",
+  "name": "application-logging-cloudwatch",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
