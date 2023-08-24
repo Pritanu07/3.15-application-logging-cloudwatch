@@ -13,24 +13,24 @@ module.exports.handler = async (event) => {
 };
 
   const express = require("express");
-  const winston = require("winston");
+  const cloudy = require("priya-lambda-cloudwatch")
   const app = express();
   const port = 3000;
-  const logger = winston.createLogger({
+  const logger = cloudy.createLogger({
   // Log only if level is less than (meaning more severe) or equal to this
   level: "info",
 
   // Use timestamp and printf to create a standard log format
-  format: winston.format.combine(
-  winston.format.timestamp(),
-  winston.format.printf (
+  format: cloudy.format.combine(
+  cloudy.format.timestamp(),
+  cloudy.format.printf (
   (info) => `${info.timestamp} ${info.level}: ${info.message}`
   )
   ),
 
   // Log to the console and a file
   transports: [
-  new winston.transports.Console(),
+  new cloudy.transports.Console(),
   ],
   });
 
@@ -44,12 +44,12 @@ module.exports.handler = async (event) => {
   // Handle HTTP GET requests to the root path
   app.get("/", (req, res) => {
   // Log messages at different log levels
-  logger.log("error", "This is an error message from vincent8055");
-  logger.log("warn", "This is a warning message vincent8055");
-  logger.log("info", "This is an info message vincent8055");
-  logger.log("verbose", "This is a verbose message vincent8055");
-  logger.log("debug", "This is a debug message vincent8055");
-  logger.log("silly", "This is a silly message vincent8055");
+  logger.log("error", "This is an error message from cloudwatch");
+  logger.log("warn", "This is a warning message from cloudwatch");
+  logger.log("info", "This is an info message cloudwatch");
+  logger.log("verbose", "This is a verbose message cloudwatch");
+  logger.log("debug", "This is a debug message cloudwatch");
+  logger.log("silly", "This is a message cloudwatch");
 
   // Send a response to the client
   res.send("Hello, world!");
