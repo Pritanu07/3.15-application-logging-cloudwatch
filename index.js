@@ -1,5 +1,7 @@
 module.exports.handler = async (event) => {
-  return {
+  console.log("Function started executing");
+  console.log("Event: ", event);
+  const response = {
     statusCode: 200,
     body: JSON.stringify(
       {
@@ -10,9 +12,7 @@ module.exports.handler = async (event) => {
       2
     ),
   };
+  console.log("Response: ", response);
+  console.log("Function finished executing");
+  return response;
 };
-console.log("Response: ", response);
-console.log("Function finished executing");
-return response;
-  
- 
